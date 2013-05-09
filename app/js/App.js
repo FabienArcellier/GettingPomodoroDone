@@ -30,6 +30,6 @@ var app = app || {};
 
 $(function(){
   'use strict';
-  
-  new app.AppView();
+  var app_model = new app.AppModel();
+  new app.AppView({model: app_model});
 });

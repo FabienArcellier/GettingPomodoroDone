@@ -1,0 +1,1 @@
+<#assign backbone.global.app = "GPD">
