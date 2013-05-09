@@ -22,6 +22,7 @@
 /*
  * Constants
  */
+var REFRESH_PERIOD = 1000;
 
 /*
  * Application initialization

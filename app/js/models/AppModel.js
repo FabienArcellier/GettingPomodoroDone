@@ -34,25 +34,34 @@ $(function(){
     Pause: 1
   };
   
-  app.AppModel = Backbone.View.extend({
+  app.AppModel = Backbone.Model.extend({
+    localStorage: new Backbone.LocalStorage('gpd-app'),
     defaults: {
-      pomodoro : {
-        current_id: 0,
-        last_tracking: 0,
-        time_ellapsed: 0,
-        time: 0,
-        type: 0
-      },
+      pomodoro_current_id: 1,
+      pomodoro_last_tracking: 0,
+      pomodoro_time_ellapsed: 0,
+      pomodoro_time: 25*60*1000,
+      pomodoro_type: app.PomodoroType.Working,
       running: false
     },    
     working_progressbar: function() {
-      var pomodoro = this.defaults.pomodoro;
-      var progress = pomodoro.type === app.PomodoroType.Working ? pomodoro.time_ellapsed / pomodoro.time : 100;
+      var type = this.get('pomodoro_type');
+      var time_ellapsed = this.get('pomodoro_time_ellapsed');
+      var time = this.get('pomodoro_time');
+      var progress = type == app.PomodoroType.Working ? ( time_ellapsed * 100) / time : 100;
       return progress;
     },
+    pomodoro_time_remaining: function()
+    {
+      var time = this.get('pomodoro_time');
+      var time_ellapsed = this.get('pomodoro_time_ellapsed');
+      var time_remaining = (time - time_ellapsed)/1000;
+      var minute_left = Math.floor(time_remaining / 60);
+      var second_left = Math.floor(time_remaining - (minute_left * 60));
+      return minute_left + " min " + second_left + " s";
+    },
     pause_progressbar: function() {
-      var pomodoro = this.defaults.pomodoro;
-      var progress = pomodoro.type === app.PomodoroType.Pause ? pomodoro.time_ellapsed / pomodoro.time : 100;
+      var progress = this.pomodoro_type == app.PomodoroType.Pause ? (pomodoro_time_ellapsed * 100) / pomodoro_time : 100;
       return progress;
     }
   });

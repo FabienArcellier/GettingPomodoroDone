@@ -35,20 +35,57 @@ $(function(){
     templatePomodoro: _.template($("#template_pomodoro").html()),
     
     events: {
-      
+      'click #pomodoro-play':'pomodoroPlay',
+      'click #pomodoro-pause': 'pomodoroPause'
     },
     initialize: function() {
+      var this2 = this;
       this.header = this.$("#header");
       this.pomodoro = this.$("#pomodoro");
+      
+      this.listenTo(this.model, "change", this.render);
+      
       this.render();
+      
+      setInterval(function(){this2.myTick();}, REFRESH_PERIOD);
     },
     render: function() {
       this.header.html(this.templateHeader());
-      this.pomodoro.html(this.templatePomodoro());
+      var model_json = this.model.toJSON();
+      model_json.working_progressbar = this.model.working_progressbar();
+      model_json.pomodoro_time_remaining = this.model.pomodoro_time_remaining();
+      this.pomodoro.html(this.templatePomodoro(model_json));
 
       Holder.run();
       return this;
+    },
+    /**
+     * Method trigged every second to update the pomodoro state
+     * of application.
+     */
+    myTick: function () {
+      if (this.model.get('running') === true)
+      {
+          var current_date = new Date();
+          var current_time = current_date.getTime();
+          var last_time_picked = this.model.get('pomodoro_last_tracking');
+          var time_ellapsed = this.model.get('pomodoro_time_ellapsed');
+          time_ellapsed += current_time - last_time_picked;
+          this.model.save({pomodoro_last_tracking: current_time, pomodoro_time_ellapsed: time_ellapsed});
+      }
+    },
+    pomodoroPlay: function(e) {
+      this.model.set('running', true);
+      var current_date = new Date();
+      var time = current_date.getTime();
+      this.model.set('pomodoro_last_tracking', time);
+    },
+    pomodoroPause: function(e) {
+      this.myTick();
+      this.model.set('running', false);
     }
+    
+    
   });
 });
 
