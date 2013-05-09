@@ -1,0 +1,34 @@
+/* 
+    Document   : main.css
+    Created on : May 9, 2013, 2:32:30 PM
+    Author     : Fabien Arcellier <fabien.arcellier@gmail.com>
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*
+ * Markup
+ */
+
+body { }
+
+/*
+ *
+ */
+
+ #app {
+   margin: auto;
+   width: 60%;
+ }
+ 
+/*
+ * Header
+ */
+#header { text-align:center}
+#header #logo {margin: 156px auto 32px auto}
+
+/*
+ * Pomodoro
+ */
+#pomodoro { margin: auto; width:50% }
+#pomodoro #pomodoro-timeremaining {text-align:right}

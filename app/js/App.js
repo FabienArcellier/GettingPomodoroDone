@@ -1,5 +1,5 @@
 /* 
- * AppView.js
+ * App.js
  * 
  * Copyright (c) 2013, Fabien Arcellier <fabien.arcellier@gmail.com>. All rights reserved.
  *
@@ -19,36 +19,17 @@
  * MA 02110-1301  USA
  */
 
-var app = app || {};
+/*
+ * Constants
+ */
 
+/*
+ * Application initialization
+ */
+var app = app || {};
 
 $(function(){
   'use strict';
   
-  /**
-   * View description
-   */
-  app.AppView = Backbone.View.extend({
-    el: $("#app"),
-    //Template declaration
-    templateHeader: _.template($("#template_header").html()),
-    templatePomodoro: _.template($("#template_pomodoro").html()),
-    
-    events: {
-      
-    },
-    initialize: function() {
-      this.header = this.$("#header");
-      this.pomodoro = this.$("#pomodoro");
-      this.render();
-    },
-    render: function() {
-      this.header.html(this.templateHeader());
-      this.pomodoro.html(this.templatePomodoro());
-
-      Holder.run();
-      return this;
-    }
-  });
+  new app.AppView();
 });
-
