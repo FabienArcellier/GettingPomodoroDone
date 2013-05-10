@@ -7,87 +7,16 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="280"
-   height="50"
+   width="128"
+   height="128"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="app-logo.svg"
-   inkscape:export-filename="/home/farcellier/dev/GettingPomodoroDone/resources/app-logo.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   sodipodi:docname="app-icon-128.svg">
   <defs
-     id="defs4">
-    <linearGradient
-       id="linearGradient4013">
-      <stop
-         style="stop-color:#aa3e2c;stop-opacity:1;"
-         offset="0"
-         id="stop4015" />
-      <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
-         offset="1"
-         id="stop4017" />
-    </linearGradient>
-    <linearGradient
-       id="linearGradient4005">
-      <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
-         offset="0"
-         id="stop4007" />
-      <stop
-         style="stop-color:#ffffff;stop-opacity:0;"
-         offset="1"
-         id="stop4009" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient3997">
-      <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
-         offset="0"
-         id="stop3999" />
-      <stop
-         style="stop-color:#ffffff;stop-opacity:0;"
-         offset="1"
-         id="stop4001" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient3970">
-      <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
-         offset="0"
-         id="stop3972" />
-      <stop
-         style="stop-color:#ffffff;stop-opacity:0"
-         offset="1"
-         id="stop3974" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3970"
-       id="linearGradient3983"
-       gradientUnits="userSpaceOnUse"
-       x1="45.892857"
-       y1="17.142857"
-       x2="45.714287"
-       y2="23.214285" />
-    <radialGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3997"
-       id="radialGradient4003"
-       cx="167.12611"
-       cy="1030.1267"
-       fx="167.12611"
-       fy="1030.1267"
-       r="95.65625"
-       gradientTransform="matrix(1,0,0,0.08616465,0,941.3662)"
-       gradientUnits="userSpaceOnUse" />
-  </defs>
+     id="defs4" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -95,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="114.38477"
-     inkscape:cy="21.461722"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="258.37048"
+     inkscape:cy="506.50521"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -122,20 +51,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1002.3622)">
-    <path
-       sodipodi:type="arc"
-       style="fill:url(#linearGradient3983);fill-opacity:1;stroke:none"
-       id="path3968"
-       sodipodi:cx="45.357143"
-       sodipodi:cy="19.910715"
-       sodipodi:rx="3.9285715"
-       sodipodi:ry="1.6964285"
-       d="m 49.285715,19.910715 a 3.9285715,1.6964285 0 1 1 -7.857143,0 3.9285715,1.6964285 0 1 1 7.857143,0 z"
-       transform="translate(-6,998.3622)" />
+     transform="translate(0,-924.36218)">
     <g
        id="g3080"
-       transform="matrix(0.22886851,0,0,0.22886851,-11.863558,959.25385)">
+       transform="matrix(0.61031602,0,0,0.61031602,-45.325743,806.16216)">
       <path
          sodipodi:nodetypes="csssssscssssssssssssssssssssscc"
          style="fill:#f65415"
@@ -156,15 +75,15 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-size:28px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="23.571426"
-       y="1033.5408"
-       id="text3985"
+       style="font-size:24.41264153px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="25.264908"
+       y="1004.855"
+       id="text3085"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         id="tspan3987"
-         x="23.571426"
-         y="1033.5408"
-         style="font-size:16px;fill:#000000;fill-opacity:1;stroke:none;letter-spacing:2.92px">Getting Pomodoro Done</tspan></text>
+         id="tspan3087"
+         x="25.264908"
+         y="1004.855"
+         style="letter-spacing:10.05189323px;word-spacing:3.87550759px">GPD</tspan></text>
   </g>
 </svg>

@@ -66,21 +66,28 @@ $(function(){
       return (time - time_ellapsed) < 0;
     },
     /**
-     * Get the time remaining as a string ( XX min XX s)
-     * If the countdown is over this method returns 0 min 0s
-     * @get
+     * Return the remaining time in seconds
      */
     timeRemaining: function()
     {
       var time = this.get('pomodoro_time');
       var time_ellapsed = this.get('pomodoro_time_ellapsed');
-      var time_remaining = (time - time_ellapsed)/1000;
+      return (time - time_ellapsed)/1000;
+    },
+    /**
+     * Get the time remaining as a string ( XX min XX s)
+     * If the countdown is over this method returns 0 min 0s
+     * @get
+     */
+    formatingTimeRemaining: function()
+    {
+      var time_remaining = this.timeRemaining();
       var minute_left = Math.floor(time_remaining / 60);
       var second_left = Math.floor(time_remaining - (minute_left * 60));
       if (this.isTimeEllapsed()) {
-        return "0 min 0 s";
+        return "00:00";
       } else {
-        return minute_left + " min " + String.fillZero(second_left, 2) + " s";
+        return minute_left + ":" + String.fillZero(second_left, 2);
       }
     },
     /**

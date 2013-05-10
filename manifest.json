@@ -3,12 +3,17 @@
 
   "name": "Getting Pomodoro Done",
   "description": "",
-  "version": "1.0r1",
+  "version": "0.1",
+  
+  "icons": { "128": "app/img/app-icon.png" },
 
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "permissions": [
+    "webRequest"
   ],
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
+  "app": {
+    "launch": {
+      "local_path": "app/index.html"
+    }
   }
 }

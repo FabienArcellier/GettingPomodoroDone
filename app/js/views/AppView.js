@@ -33,7 +33,18 @@ $(function(){
     //Template declaration
     templateHeader: _.template($("#template_header").html()),
     templatePomodoro: _.template($("#template_pomodoro").html()),
+    templateNotificationBreak: _.template($('#template_notificationBreak').html()),
+    templateNotificationWorking: _.template($('#template_notificationWorking').html()),
+    
+    /**
+     * Internal state
+     */
+    
+    /**
+     * Set this attribute at true to request a header refresh
+     */
     refreshHeader: true,
+    showNotification: false,
     
     events: {
       'click #pomodoro-play':'pomodoroPlay',
@@ -50,6 +61,8 @@ $(function(){
       this.render();
 
       $(document).bind('keyup', function(e){this2.onKeyUp(e);});
+      $(document).desktopify({title: 'Getting Pomodoro Done', timeout:1 * 60 * 1000});
+      $(document).trigger('click');
       this.interval = setInterval(function(){this2.myTick();}, REFRESH_PERIOD);
     },
     /**
@@ -69,10 +82,10 @@ $(function(){
       var model_json = this.model.toJSON();
       model_json.workingProgress = this.model.workingProgress();
       model_json.breakProgress = this.model.breakProgress();
-      model_json.timeRemaining = this.model.timeRemaining();
+      model_json.timeRemaining = this.model.formatingTimeRemaining();
       this.pomodoro.html(this.templatePomodoro(model_json));
       
-      document.title = this.model.timeRemaining() + ' - Getting Pomodoro Done';
+      document.title = this.model.formatingTimeRemaining() + ' - Getting Pomodoro Done';
       
       var btn_play = this.$("#pomodoro-play");
       var btn_break = this.$("#pomodoro-break");
@@ -84,6 +97,21 @@ $(function(){
         btn_play.removeClass("disabled");
         btn_break.addClass("disabled");
       }
+      
+      var pomodory_type = this.model.get('pomodoro_type');
+      
+      if (this.showNotification == true)
+      {
+        if (pomodory_type == app.PomodoroType.Break)
+        {
+          this.pomodoro.trigger('notify', [ this.templateNotificationBreak(), 'Getting Pomodoro Done' ]);  
+        } else {
+          this.pomodoro.trigger('notify', [ this.templateNotificationWorking(), 'Getting Pomodoro Done' ]);
+        }
+        
+        this.showNotification = false;
+      }
+
 
       return this;
     },
@@ -113,7 +141,8 @@ $(function(){
           
           if (this.model.isTimeEllapsed() === true)
           {
-              this.model.shiftNextStep();
+            this.showNotification = true;
+            this.model.shiftNextStep();
           }
       }
     },
