@@ -35,7 +35,6 @@ $(function(){
   };
   
   app.AppModel = Backbone.Model.extend({
-    localStorage: new Backbone.LocalStorage('gpd-app'),
     defaults: {
       pomodoro_current_id: 1,
       pomodoro_last_tracking: 0,
@@ -51,6 +50,12 @@ $(function(){
      * model
      **/
     
+    /**
+     * Return true if the countdown is active, otherwise false
+     */
+    isRunning: function() {
+      return this.get('running');
+    },
     /**
      * Return true if the countdown is over, otherwise return false
      */

@@ -21,7 +21,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title></title>
+    <title>Getting Pomodoro Done</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="vendors/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="css/main.css" />
@@ -53,14 +53,12 @@
         </div>
       </div>
       <div class="row-fluid">
-        <div class="span1 offset9">
-          <img data-src="holder.js/32x32" alt="logo" id="pomodoro-play" />
-        </div>
-        <div class="span1">
-          <img data-src="holder.js/32x32" alt="logo" id="pomodoro-break" />
-        </div>
-        <div class="span1">
-          <img data-src="holder.js/32x32" alt="logo" id="pomodoro-stop" />
+        <div class="btn-toolbar offset8">
+          <div class="btn-group">
+            <a class="btn" id="pomodoro-play"><i class="icon-play" ></i></a>
+            <a class="btn" id="pomodoro-break"><i class="icon-pause" ></i></a>
+            <a class="btn btn-danger" id="pomodoro-stop"><i class="icon-stop" ></i></a>
+          </div>
         </div>
       </div>
     </script>
@@ -73,6 +71,7 @@
     <script type="text/javascript" src="vendors/backbone/backbone.js"></script>
     <script type="text/javascript" src="vendors/backbone/backbone.localStorage.js"></script>
     <script type="text/javascript" src="js/models/AppModel.js"></script>
+    <script type="text/javascript" src="js/collections/AppCollection.js"></script>
     <script type="text/javascript" src="js/views/AppView.js"></script>
     <script type="text/javascript" src="js/App.js"></script>
   </body>

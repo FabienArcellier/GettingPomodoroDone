@@ -1,5 +1,5 @@
 /* 
- * App.js
+ * AppCollection.js
  * 
  * Copyright (c) 2013, Fabien Arcellier <fabien.arcellier@gmail.com>. All rights reserved.
  *
@@ -19,36 +19,31 @@
  * MA 02110-1301  USA
  */
 
-/*
- * Constants
- */
-var REFRESH_PERIOD = 1000;
-var SHORT_BREAK = 5;
-var LONG_BREAK = 20;
-var WORK = 25;
-var POMODORO_BY_LONG_BREAK = 4;
-var KEY_SPACE = 32;
-
-/*
- * Application initialization
- */
 var app = app || {};
+
 
 $(function(){
   'use strict';
-  var app_collection = new app.AppCollection();
   
-  // Load the collection and check if a model already exists
-  // if not, it creates and register it
-  app_collection.fetch();
-  var app_model = null;
-  if (app_collection.length == 0) {
-    app_model = new app.AppModel();
-    app_collection.push(app_model);
-  } else {
-    app_model = app_collection.at(0);
-  }
-  
-  // Load the view
-  new app.AppView({model: app_model});
+  /**
+   * This collection is done for using Backbone.LocalStorage.
+   * It contains only one model.
+   */
+  app.AppCollection = Backbone.Collection.extend({
+    model: app.AppModel,
+    localStorage: new Backbone.LocalStorage('gpd-AppCollection')
+    
+    /**
+     * Assessors
+     * @remark Those methods doesn't change the internal state of the
+     * collection
+     **/
+    
+    /**
+     * Commands 
+     * @remark Those methods changes the internal state of the collection
+     * but return no value
+     */
+  });
 });
+

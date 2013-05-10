@@ -46,19 +46,48 @@ $(function(){
       this.listenTo(this.model, "change", this.render);
       
       this.render();
-      
-      setInterval(function(){this2.myTick();}, REFRESH_PERIOD);
+
+      $(document).bind('keyup', function(e){this2.onKeyUp(e);});
+      this.interval = setInterval(function(){this2.myTick();}, REFRESH_PERIOD);
     },
-    render: function() {
+    /**
+     * Destructor
+     */
+    remove: function() {
+      $(document).unbind('keyup');
+      clearInterval(this.interval);
+    },
+    render: function() { 
       this.header.html(this.templateHeader());
       var model_json = this.model.toJSON();
       model_json.workingProgress = this.model.workingProgress();
       model_json.breakProgress = this.model.breakProgress();
       model_json.timeRemaining = this.model.timeRemaining();
       this.pomodoro.html(this.templatePomodoro(model_json));
+      
+      var btn_play = this.$("#pomodoro-play");
+      var btn_break = this.$("#pomodoro-break");
 
+      if (this.model.get('running') === true) {
+        btn_play.addClass("disabled");
+        btn_break.removeClass("disabled");
+      } else {
+        btn_play.removeClass("disabled");
+        btn_break.addClass("disabled");
+      }
+      
       Holder.run();
       return this;
+    },
+    onKeyUp: function(e) {
+      if(e.which === KEY_SPACE)
+      {
+        if (this.model.isRunning()) {
+          this.pomodoroBreak();
+        } else {
+          this.pomodoroPlay()
+        }
+      }
     },
     /**
      * Method trigged every second to update the pomodoro state
@@ -85,13 +114,13 @@ $(function(){
       var current_date = new Date();
       var time = current_date.getTime();
       this.model.set('pomodoro_last_tracking', time);
+      this.model.save();
     },
     pomodoroBreak: function(e) {
       this.myTick();
       this.model.set('running', false);
+      this.model.save();
     }
-    
-    
   });
 });
 
