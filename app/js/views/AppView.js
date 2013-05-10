@@ -36,7 +36,7 @@ $(function(){
     
     events: {
       'click #pomodoro-play':'pomodoroPlay',
-      'click #pomodoro-pause': 'pomodoroPause'
+      'click #pomodoro-break': 'pomodoroBreak'
     },
     initialize: function() {
       var this2 = this;
@@ -52,8 +52,9 @@ $(function(){
     render: function() {
       this.header.html(this.templateHeader());
       var model_json = this.model.toJSON();
-      model_json.working_progressbar = this.model.working_progressbar();
-      model_json.pomodoro_time_remaining = this.model.pomodoro_time_remaining();
+      model_json.workingProgress = this.model.workingProgress();
+      model_json.breakProgress = this.model.breakProgress();
+      model_json.timeRemaining = this.model.timeRemaining();
       this.pomodoro.html(this.templatePomodoro(model_json));
 
       Holder.run();
@@ -72,6 +73,11 @@ $(function(){
           var time_ellapsed = this.model.get('pomodoro_time_ellapsed');
           time_ellapsed += current_time - last_time_picked;
           this.model.save({pomodoro_last_tracking: current_time, pomodoro_time_ellapsed: time_ellapsed});
+          
+          if (this.model.isTimeEllapsed() === true)
+          {
+              this.model.shiftNextStep();
+          }
       }
     },
     pomodoroPlay: function(e) {
@@ -80,7 +86,7 @@ $(function(){
       var time = current_date.getTime();
       this.model.set('pomodoro_last_tracking', time);
     },
-    pomodoroPause: function(e) {
+    pomodoroBreak: function(e) {
       this.myTick();
       this.model.set('running', false);
     }

@@ -40,16 +40,16 @@
     <script type="text/html" id="template_pomodoro">
       <div id="pomodoro-header" class="row-fluid">
         <div id="pomodoro-id" class="span3">Pomodoro : <%- pomodoro_current_id %></div>
-        <div id="pomodoro-timeremaining" class="span3 offset6"><%- pomodoro_time_remaining %></div>
+        <div id="pomodoro-timeremaining" class="span3 offset6"><%- timeRemaining %></div>
       </div>
       <div id="pomodoro-working-area" class="row-fluid">
         <div class="progress pomodoro-working-progressbar">
-          <div class="bar" style="width: <%- working_progressbar %>%;"></div>
+          <div class="bar" style="width: <%- workingProgress %>%;"></div>
         </div>
       </div>
-      <div id="pomodoro-pause-area" class="row-fluid">
-        <div class="progress pomodoro-pause-progressbar">
-          <div class="bar" style="width: 0%;"></div>
+      <div id="pomodoro-break-area" class="row-fluid">
+        <div class="progress pomodoro-break-progressbar">
+          <div class="bar" style="width: <%- breakProgress %>%;"></div>
         </div>
       </div>
       <div class="row-fluid">
@@ -57,7 +57,7 @@
           <img data-src="holder.js/32x32" alt="logo" id="pomodoro-play" />
         </div>
         <div class="span1">
-          <img data-src="holder.js/32x32" alt="logo" id="pomodoro-pause" />
+          <img data-src="holder.js/32x32" alt="logo" id="pomodoro-break" />
         </div>
         <div class="span1">
           <img data-src="holder.js/32x32" alt="logo" id="pomodoro-stop" />

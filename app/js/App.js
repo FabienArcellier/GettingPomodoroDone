@@ -23,6 +23,10 @@
  * Constants
  */
 var REFRESH_PERIOD = 1000;
+var SHORT_BREAK = 5;
+var LONG_BREAK = 20;
+var WORK = 25;
+var POMODORO_BY_LONG_BREAK = 4;
 
 /*
  * Application initialization
