@@ -18,14 +18,14 @@ body { }
 
  #app {
    margin: auto;
-   width: 60%;
+   width: 500px;
  }
  
 /*
  * Header
  */
 #header { text-align:center}
-#header #logo {margin: 156px auto 32px auto}
+#header #logo {margin: 20% auto 32px auto}
 
 /*
  * Pomodoro

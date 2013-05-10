@@ -80,7 +80,7 @@ $(function(){
       if (this.isTimeEllapsed()) {
         return "0 min 0 s";
       } else {
-        return minute_left + " min " + second_left + " s";
+        return minute_left + " min " + String.fillZero(second_left, 2) + " s";
       }
     },
     /**
@@ -113,6 +113,14 @@ $(function(){
      * @remark Those methods changes the internal state of the object
      * but return no value
      */
+    
+    /**
+     * Reset the model to the its default state
+     */
+    reset: function()
+    {
+      this.save(this.defaults);
+    },
     
     /**
      * Move the pomodoro session to the next step

@@ -23,6 +23,7 @@
   <head>
     <title>Getting Pomodoro Done</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" type="image/png" href="img/app-icon.png" />
     <link rel="stylesheet" href="vendors/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="css/main.css" />
   </head>
@@ -34,21 +35,21 @@
     
     <!-- Template Underscore -->
     <script type="text/html" id="template_header">
-      <img data-src="holder.js/280x50" alt="logo" id="logo" />
+      <img src="img/app-logo.png" alt="Getting Pomodoro Done logo" id="logo" />
     </script>
     
     <script type="text/html" id="template_pomodoro">
       <div id="pomodoro-header" class="row-fluid">
-        <div id="pomodoro-id" class="span3">Pomodoro : <%- pomodoro_current_id %></div>
-        <div id="pomodoro-timeremaining" class="span3 offset6"><%- timeRemaining %></div>
+        <div id="pomodoro-id" class="span5">Pomodoro : <%- pomodoro_current_id %></div>
+        <div id="pomodoro-timeremaining" class="span4 offset3"><%- timeRemaining %></div>
       </div>
-      <div id="pomodoro-working-area" class="row-fluid">
-        <div class="progress pomodoro-working-progressbar">
+      <div class="row-fluid">
+        <div id="pomodoro-working-area" class="progress pomodoro-working-progressbar">
           <div class="bar" style="width: <%- workingProgress %>%;"></div>
         </div>
       </div>
-      <div id="pomodoro-break-area" class="row-fluid">
-        <div class="progress pomodoro-break-progressbar">
+      <div class="row-fluid">
+        <div id="pomodoro-break-area" class="progress progress-success pomodoro-break-progressbar">
           <div class="bar" style="width: <%- breakProgress %>%;"></div>
         </div>
       </div>
@@ -64,12 +65,12 @@
     </script>
     
     <!-- Javascript inclusion -->
-    <script type="text/javascript" src="vendors/holder/holder.js"></script>
     <script type="text/javascript" src="vendors/underscore/underscore.js"></script>
     <script type="text/javascript" src="vendors/jquery/jquery-2.0.0.js"></script>
     <script type="text/javascript" src="vendors/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="vendors/backbone/backbone.js"></script>
     <script type="text/javascript" src="vendors/backbone/backbone.localStorage.js"></script>
+    <script type="text/javascript" src="js/Utility.js"></script>
     <script type="text/javascript" src="js/models/AppModel.js"></script>
     <script type="text/javascript" src="js/collections/AppCollection.js"></script>
     <script type="text/javascript" src="js/views/AppView.js"></script>

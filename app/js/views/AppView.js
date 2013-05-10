@@ -33,10 +33,12 @@ $(function(){
     //Template declaration
     templateHeader: _.template($("#template_header").html()),
     templatePomodoro: _.template($("#template_pomodoro").html()),
+    refreshHeader: true,
     
     events: {
       'click #pomodoro-play':'pomodoroPlay',
-      'click #pomodoro-break': 'pomodoroBreak'
+      'click #pomodoro-break': 'pomodoroBreak',
+      'click #pomodoro-stop' : 'pomodoroStop'
     },
     initialize: function() {
       var this2 = this;
@@ -57,13 +59,20 @@ $(function(){
       $(document).unbind('keyup');
       clearInterval(this.interval);
     },
-    render: function() { 
-      this.header.html(this.templateHeader());
+    render: function() {
+      if (this.refreshHeader == true)
+      {
+        this.header.html(this.templateHeader());
+        this.refreshHeader = false;
+      }
+      
       var model_json = this.model.toJSON();
       model_json.workingProgress = this.model.workingProgress();
       model_json.breakProgress = this.model.breakProgress();
       model_json.timeRemaining = this.model.timeRemaining();
       this.pomodoro.html(this.templatePomodoro(model_json));
+      
+      document.title = this.model.timeRemaining() + ' - Getting Pomodoro Done';
       
       var btn_play = this.$("#pomodoro-play");
       var btn_break = this.$("#pomodoro-break");
@@ -75,8 +84,7 @@ $(function(){
         btn_play.removeClass("disabled");
         btn_break.addClass("disabled");
       }
-      
-      Holder.run();
+
       return this;
     },
     onKeyUp: function(e) {
@@ -120,6 +128,9 @@ $(function(){
       this.myTick();
       this.model.set('running', false);
       this.model.save();
+    },
+    pomodoroStop: function() {
+      this.model.reset();
     }
   });
 });
