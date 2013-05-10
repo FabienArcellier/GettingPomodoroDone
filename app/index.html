@@ -31,11 +31,20 @@
     <div id="app">
       <div id="header"></div>
       <div id="pomodoro"></div>
+      <div id="settings"></div>
     </div>
     
     <!-- Template Underscore -->
     <script type="text/html" id="template_header">
       <img src="img/app-logo.png" alt="Getting Pomodoro Done logo" id="logo" />
+      <div class="row-fluid">
+        <div class="span2">
+          <a class="btn" id="header-pomodoro"><i class="icon-arrow-up" ></i></a>
+        </div>
+        <div class="offset8 span2">
+          <a class="btn" id="header-settings"><i class="icon-wrench" ></i></a>
+        </div>
+      </div>
     </script>
     
     <script type="text/html" id="template_pomodoro">
@@ -64,6 +73,10 @@
       </div>
     </script>
     
+    <script type="text/html" id="template_settings">
+      <h1>Settings</h1>
+    </script>
+    
     <script type="text/html" id="template_notificationBreak">
       It's time to take a break.
     </script>
@@ -82,6 +95,8 @@
     <script type="text/javascript" src="js/Utility.js"></script>
     <script type="text/javascript" src="js/models/AppModel.js"></script>
     <script type="text/javascript" src="js/collections/AppCollection.js"></script>
+    <script type="text/javascript" src="js/views/SettingsView.js"></script>
+    <script type="text/javascript" src="js/views/PomodoroView.js"></script>
     <script type="text/javascript" src="js/views/AppView.js"></script>
     <script type="text/javascript" src="js/App.js"></script>
   </body>

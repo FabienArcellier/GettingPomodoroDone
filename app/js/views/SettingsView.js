@@ -1,5 +1,5 @@
 /* 
- * App.js
+ * SettingsView.js
  * 
  * Copyright (c) 2013, Fabien Arcellier <fabien.arcellier@gmail.com>. All rights reserved.
  *
@@ -19,40 +19,31 @@
  * MA 02110-1301  USA
  */
 
-/*
- * Constants
- */
-var REFRESH_PERIOD = 1000;
-var SHORT_BREAK = 5;
-var LONG_BREAK = 20;
-var WORK = 25;
-var POMODORO_BY_LONG_BREAK = 4;
-var KEY_SPACE = 32;
-
-/*
- * Application initialization
- */
 var app = app || {};
+
 
 $(function(){
   'use strict';
-  var app_collection = new app.AppCollection();
   
-  // Load the collection and check if a model already exists
-  // if not, it creates and register it
-  app_collection.fetch();
-  var app_model = null;
-  if (app_collection.length == 0) {
-    app_model = new app.AppModel();
-    app_collection.push(app_model);
-  } else {
-    app_model = app_collection.at(0);
-  }
-  
-  // Load the view
-  var appView = new app.AppView({ model: app_model });
-  appView.pomodoroView = new app.PomodoroView({model: app_model});
-  appView.settingsView = new app.SettingsView();
-  appView.render();
-  
+  /**
+   * View description
+   */
+  app.SettingsView = Backbone.View.extend({
+    el:'#settings',
+    //Template declaration
+    templateSettings: _.template($("#template_settings").html()),
+    
+    events: {
+      
+    },
+    initialize: function() {
+      this.$el.hide();
+      this.render();
+    },
+    render: function() {
+      this.$el.html(this.templateSettings());
+      return this;
+    }
+  });
 });
+

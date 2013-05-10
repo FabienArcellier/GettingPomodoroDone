@@ -5,7 +5,10 @@
   "description": "",
   "version": "0.1",
   
-  "icons": { "128": "app/img/app-icon.png" },
+  "icons": { 
+    "16": "app/img/app-icon-16.png",
+    "64": "app/img/app-icon-64.png",
+    "128": "app/img/app-icon.png" },
 
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "permissions": [
@@ -15,5 +18,6 @@
     "launch": {
       "local_path": "app/index.html"
     }
-  }
+  },
+  "offline_enabled": true
 }

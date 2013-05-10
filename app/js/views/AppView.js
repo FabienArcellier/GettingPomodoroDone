@@ -25,6 +25,11 @@ var app = app || {};
 $(function(){
   'use strict';
   
+  app.AppMode = {
+    Pomodoro: 0,
+    Settings: 1
+  }
+  
   /**
    * View description
    */
@@ -32,13 +37,21 @@ $(function(){
     el: $("#app"),
     //Template declaration
     templateHeader: _.template($("#template_header").html()),
-    templatePomodoro: _.template($("#template_pomodoro").html()),
     templateNotificationBreak: _.template($('#template_notificationBreak').html()),
     templateNotificationWorking: _.template($('#template_notificationWorking').html()),
     
     /**
+     * Sub views
+     */
+    pomodoroView: null,
+    settingView: null,
+    
+    /**
      * Internal state
      */
+    settingsBtn: null,
+    pomodoroBtn: null,
+    mode: app.AppMode.Pomodoro,
     
     /**
      * Set this attribute at true to request a header refresh
@@ -47,21 +60,16 @@ $(function(){
     showNotification: false,
     
     events: {
-      'click #pomodoro-play':'pomodoroPlay',
-      'click #pomodoro-break': 'pomodoroBreak',
-      'click #pomodoro-stop' : 'pomodoroStop'
+      'click #header-settings': 'displaySettings',
+      'click #header-pomodoro': 'displayPomodoro'
     },
     initialize: function() {
       var this2 = this;
       this.header = this.$("#header");
       this.pomodoro = this.$("#pomodoro");
-      
       this.listenTo(this.model, "change", this.render);
-      
-      this.render();
 
-      $(document).bind('keyup', function(e){this2.onKeyUp(e);});
-      $(document).desktopify({title: 'Getting Pomodoro Done', timeout:1 * 60 * 1000});
+      $(document).desktopify({title: 'Getting Pomodoro Done', timeout: 0});
       $(document).trigger('click');
       this.interval = setInterval(function(){this2.myTick();}, REFRESH_PERIOD);
     },
@@ -70,60 +78,46 @@ $(function(){
      */
     remove: function() {
       $(document).unbind('keyup');
-      clearInterval(this.interval);
+      this.pomodoroView.remove();
     },
     render: function() {
+      document.title = this.model.formatingTimeRemaining() + ' - Getting Pomodoro Done';
       if (this.refreshHeader == true)
       {
         this.header.html(this.templateHeader());
         this.refreshHeader = false;
       }
       
-      var model_json = this.model.toJSON();
-      model_json.workingProgress = this.model.workingProgress();
-      model_json.breakProgress = this.model.breakProgress();
-      model_json.timeRemaining = this.model.formatingTimeRemaining();
-      this.pomodoro.html(this.templatePomodoro(model_json));
-      
-      document.title = this.model.formatingTimeRemaining() + ' - Getting Pomodoro Done';
-      
-      var btn_play = this.$("#pomodoro-play");
-      var btn_break = this.$("#pomodoro-break");
-
-      if (this.model.get('running') === true) {
-        btn_play.addClass("disabled");
-        btn_break.removeClass("disabled");
-      } else {
-        btn_play.removeClass("disabled");
-        btn_break.addClass("disabled");
-      }
+      this.pomodoroBtn = $("#header-pomodoro");
+      this.settingsBtn = $("#header-settings");
       
       var pomodory_type = this.model.get('pomodoro_type');
-      
       if (this.showNotification == true)
       {
         if (pomodory_type == app.PomodoroType.Break)
         {
-          this.pomodoro.trigger('notify', [ this.templateNotificationBreak(), 'Getting Pomodoro Done' ]);  
+          this.pomodoro.trigger('notify', [ this.templateNotificationBreak()]);  
         } else {
-          this.pomodoro.trigger('notify', [ this.templateNotificationWorking(), 'Getting Pomodoro Done' ]);
+          this.pomodoro.trigger('notify', [ this.templateNotificationWorking()]);
         }
         
         this.showNotification = false;
       }
-
+      
+      if (this.mode == app.AppMode.Settings) {
+        this.settingsBtn.hide();
+        this.pomodoroBtn.show();
+        this.pomodoroView.$el.hide();
+        this.settingsView.$el.show();
+      } else {
+        this.settingsBtn.show();
+        this.pomodoroBtn.hide();
+        this.pomodoroView.$el.show();
+        this.settingsView.$el.hide();
+      }
+     
 
       return this;
-    },
-    onKeyUp: function(e) {
-      if(e.which === KEY_SPACE)
-      {
-        if (this.model.isRunning()) {
-          this.pomodoroBreak();
-        } else {
-          this.pomodoroPlay()
-        }
-      }
     },
     /**
      * Method trigged every second to update the pomodoro state
@@ -146,20 +140,13 @@ $(function(){
           }
       }
     },
-    pomodoroPlay: function(e) {
-      this.model.set('running', true);
-      var current_date = new Date();
-      var time = current_date.getTime();
-      this.model.set('pomodoro_last_tracking', time);
-      this.model.save();
+    displaySettings: function() {
+      this.mode = app.AppMode.Settings;
+      this.render();
     },
-    pomodoroBreak: function(e) {
-      this.myTick();
-      this.model.set('running', false);
-      this.model.save();
-    },
-    pomodoroStop: function() {
-      this.model.reset();
+    displayPomodoro: function() {
+      this.mode = app.AppMode.Pomodoro;
+      this.render();
     }
   });
 });
