@@ -33,10 +33,16 @@ $(function(){
     //Template declaration
     templatePomodoro: _.template($("#template_pomodoro").html()),
     
+    tooltips: {
+      '#pomodoro-play' : 'start Pomodoro (SPACE)'
+    },
     events: {
       'click #pomodoro-play':'pomodoroPlay',
       'click #pomodoro-break': 'pomodoroBreak',
-      'click #pomodoro-stop' : 'pomodoroStop'
+      'click #pomodoro-stop' : 'pomodoroStop',
+      'click #pomodoro-forward': 'pomodoroForward',
+      'click #pomodoro-rewind' : 'pomodoroRewind',
+      'click #pomodoro-backward' : 'pomodoroBackward'
     },
     initialize: function() {
       var this2 = this;
@@ -60,6 +66,11 @@ $(function(){
       } else {
         btn_play.removeClass("disabled");
         btn_break.addClass("disabled");
+      }
+      
+      var btn_backward = this.$("#pomodoro-backward");
+      if (this.model.isFirstPomodoro()) {
+        btn_backward.addClass("disabled");
       }
       
       return this;
@@ -94,6 +105,15 @@ $(function(){
     },
     pomodoroStop: function() {
       this.model.reset();
+    },
+    pomodoroForward: function() {
+      this.model.shiftNextStep();
+    },
+    pomodoroRewind: function() {
+      this.model.rewind();
+    },
+    pomodoroBackward: function() {
+      this.model.shiftPreviousStep();
     }
   });
 });

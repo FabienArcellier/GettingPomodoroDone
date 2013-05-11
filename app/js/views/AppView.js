@@ -69,7 +69,7 @@ $(function(){
       this.pomodoro = this.$("#pomodoro");
       this.listenTo(this.model, "change", this.render);
 
-      $(document).desktopify({title: 'Getting Pomodoro Done', timeout: 0});
+      $(document).desktopify({title: 'Getting Pomodoro Done', timeout: 1 * 60 *1000});
       $(document).trigger('click');
       this.interval = setInterval(function(){this2.myTick();}, REFRESH_PERIOD);
     },

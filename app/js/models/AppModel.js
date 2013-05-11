@@ -66,6 +66,14 @@ $(function(){
       return (time - time_ellapsed) < 0;
     },
     /**
+     * Return true if it's the first pomodoro and we can't move backward again
+     */
+    isFirstPomodoro: function() {
+      var type = this.get('pomodoro_type');
+      var pomodoro_id = this.get('pomodoro_current_id');
+      return pomodoro_id <= 1 && type === app.PomodoroType.Working; 
+    },
+    /**
      * Return the remaining time in seconds
      */
     timeRemaining: function()
@@ -152,8 +160,10 @@ $(function(){
         }
       }
       else {
+        pomodoro_id++;
         next_values = {
-          pomodoro_current_id: ++pomodoro_id,
+          pomodoro_current_id: pomodoro_id,
+          pomodoro_internal_id: pomodoro_id % POMODORO_BY_LONG_BREAK,
           pomodoro_last_tracking: current_time,
           pomodoro_time_ellapsed: 0,
           pomodoro_time: WORK * 60 * 1000,
@@ -164,6 +174,43 @@ $(function(){
       this.save(next_values);
       
       return;
+    },
+    /**
+     * Set the current pomodoro to zero
+     */
+    rewind: function() {
+      this.save({pomodoro_time_ellapsed:0});
+    },
+    shiftPreviousStep: function() {
+      var type = this.get('pomodoro_type');
+      var pomodoro_id = this.get('pomodoro_current_id');
+      if (this.isFirstPomodoro())
+        return;
+      
+      var current_date = new Date();
+      var current_time = current_date.getTime();
+      var next_values = {};
+      if (type === app.PomodoroType.Working)
+      {
+        var break_time = (pomodoro_id - 1) % POMODORO_BY_LONG_BREAK == 0 ? LONG_BREAK : SHORT_BREAK;
+        next_values = {
+          pomodoro_current_id: Math.abs(--pomodoro_id),
+          pomodoro_last_tracking: current_time,
+          pomodoro_time_ellapsed: 0,
+          pomodoro_time: break_time * 60 * 1000,
+          pomodoro_type: app.PomodoroType.Break
+        }
+      }
+      else {
+        next_values = {
+          pomodoro_last_tracking: current_time,
+          pomodoro_time_ellapsed: 0,
+          pomodoro_time: WORK * 60 * 1000,
+          pomodoro_type: app.PomodoroType.Working
+        }
+      }
+      
+      this.save(next_values);
     }
   });
 });

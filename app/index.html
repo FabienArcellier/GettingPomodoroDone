@@ -63,26 +63,34 @@
         </div>
       </div>
       <div class="row-fluid">
-        <div class="btn-toolbar offset8">
+        
+        <div class="span4 btn-toolbar">
           <div class="btn-group">
-            <a class="btn" id="pomodoro-play"><i class="icon-play" ></i></a>
-            <a class="btn" id="pomodoro-break"><i class="icon-pause" ></i></a>
-            <a class="btn btn-danger" id="pomodoro-stop"><i class="icon-stop" ></i></a>
+            <a class="btn" title="Play (SPACE)" id="pomodoro-play"><i class="icon-play" ></i></a>
+            <a class="btn" title="Pause (SPACE)" id="pomodoro-break"><i class="icon-pause" ></i></a>
+            <a class="btn btn-danger" title="Stop" id="pomodoro-stop"><i class="icon-stop" ></i></a>
+          </div>
+        </div>
+        
+        <div class="span4 offset4 btn-toolbar">
+          <div class="btn-group">
+            <a class="btn" title="Previous pomodoro" id="pomodoro-backward"><i class="icon-backward" ></i></a>
+            <a class="btn" title="Rewind pomodoro" id="pomodoro-rewind"><i class="icon-step-backward" ></i></a>
+            <a class="btn" title="Next pomodoro" id="pomodoro-forward"><i class="icon-forward" ></i></a>
           </div>
         </div>
       </div>
     </script>
     
     <script type="text/html" id="template_settings">
-      <h1>Settings</h1>
     </script>
     
     <script type="text/html" id="template_notificationBreak">
-      It's time to take a break.
+      It's time to take a break. Think about what you have learned :)
     </script>
     
     <script type="text/html" id="template_notificationWorking">
-      That's time, get back to work.
+      That's time, get back to work. Have fun !
     </script>
     
     <!-- Javascript inclusion -->
