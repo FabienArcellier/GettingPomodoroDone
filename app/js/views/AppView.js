@@ -25,11 +25,6 @@ var app = app || {};
 $(function(){
   'use strict';
   
-  app.AppMode = {
-    Pomodoro: 0,
-    Settings: 1
-  }
-  
   /**
    * View description
    */
@@ -51,7 +46,6 @@ $(function(){
      */
     settingsBtn: null,
     pomodoroBtn: null,
-    mode: app.AppMode.Pomodoro,
     
     /**
      * Set this attribute at true to request a header refresh
@@ -77,8 +71,8 @@ $(function(){
      * Destructor
      */
     remove: function() {
-      $(document).unbind('keyup');
       this.pomodoroView.remove();
+      this.settingsView.remove();
     },
     render: function() {
       document.title = this.model.formatingTimeRemaining() + ' - Getting Pomodoro Done';
@@ -91,10 +85,10 @@ $(function(){
       this.pomodoroBtn = $("#header-pomodoro");
       this.settingsBtn = $("#header-settings");
       
-      var pomodory_type = this.model.get('pomodoro_type');
+      var pomodoro_type = this.model.get('pomodoro_type');
       if (this.showNotification == true)
       {
-        if (pomodory_type == app.PomodoroType.Break)
+        if (pomodoro_type == app.PomodoroType.Break)
         {
           this.pomodoro.trigger('notify', [ this.templateNotificationBreak()]);  
         } else {
@@ -104,7 +98,7 @@ $(function(){
         this.showNotification = false;
       }
       
-      if (this.mode == app.AppMode.Settings) {
+      if (this.model.get('app_mode') == app.AppMode.Settings) {
         this.settingsBtn.hide();
         this.pomodoroBtn.show();
         this.pomodoroView.$el.hide();
@@ -141,12 +135,12 @@ $(function(){
       }
     },
     displaySettings: function() {
-      this.mode = app.AppMode.Settings;
-      this.render();
+      app.router.navigate('#settings');
+      this.model.save({app_mode: app.AppMode.Settings});
     },
     displayPomodoro: function() {
-      this.mode = app.AppMode.Pomodoro;
-      this.render();
+      app.router.navigate();
+      this.model.save({app_mode: app.AppMode.Pomodoro});
     }
   });
 });

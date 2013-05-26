@@ -30,19 +30,46 @@ $(function(){
    */
   app.SettingsView = Backbone.View.extend({
     el:'#settings',
-    //Template declaration
+    // models
+    modelSettings: {},
+    modelApp: {},
+    
+    //Template declaration#settings
     templateSettings: _.template($("#template_settings").html()),
     
     events: {
-      
+      "click #settings_save" : "onSettingsSave",
+      "click #settings_cancel" : "onSettingsCancel"
     },
-    initialize: function() {
+    initialize: function(options) {
+      this.modelSettings = options.modelSettings;
+      this.modelApp = options.modelApp;
+      
       this.$el.hide();
       this.render();
+      
+      this.listenTo(this.modelSettings, "change", this.render);
     },
     render: function() {
-      this.$el.html(this.templateSettings());
+      this.$el.html(this.templateSettings(this.modelSettings.toJSON()));
       return this;
+    },
+    
+    // Events handler
+    onSettingsSave: function(e) {
+      var settings = {};
+      settings.workingTime = this.$("#settings_workingTime").val();
+      settings.shortBreakTime = this.$("#settings_shortBreakTime").val();
+      settings.longBreakTime = this.$("#settings_longBreakTime").val();
+      settings.iteration = this.$("#settings_iteration").val();
+      
+      this.modelSettings.save(settings);
+      this.modelApp.save({app_mode: app.AppMode.Pomodoro});
+      app.router.navigate();
+    },
+    onSettingsCancel: function(e) {
+      this.modelApp.save({app_mode: app.AppMode.Pomodoro});
+      app.router.navigate();
     }
   });
 });

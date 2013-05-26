@@ -1,5 +1,5 @@
 /* 
- * AppCollection.js
+ * SettingsCollection.js
  * 
  * Copyright (c) 2013, Fabien Arcellier <fabien.arcellier@gmail.com>. All rights reserved.
  *
@@ -26,17 +26,11 @@ $(function(){
   'use strict';
   
   /**
-   * This collection is done for using Backbone.LocalStorage.
-   * It contains only one model.
+   * Collection description
    */
-  app.AppCollection = Backbone.Collection.extend({
-    model: app.AppModel,
-    localStorage: new Backbone.LocalStorage('gpd-AppCollection'),
-    settingsModel: {},
-    
-    initialize: function(models, options) {
-      this.settingsModel = options.settingsModel;
-    },
+  app.SettingsCollection = Backbone.Collection.extend({
+    model: app.SettingsModel,
+    localStorage: new Backbone.LocalStorage('gpd-SettingsCollection')
     
     /**
      * Assessors
@@ -44,38 +38,11 @@ $(function(){
      * collection
      **/
     
-    
     /**
      * Commands 
      * @remark Those methods changes the internal state of the collection
      * but return no value
      */
-    createItem: function() {
-      return new this.model({}, {settingsModel: this.settingsModel});
-    },
-    
-    fetch: function(options) {
-      var callback_success = false;
-      if (options) {
-        callback_success = options.success;
-      } else {
-        options = {};
-      }
-
-      var collection = this;   
-      options.success = function() {
-        collection.each(function(model){
-          model.setSettings(collection.settingsModel);
-        });
-        
-        if (callback_success) {
-          callback_success();
-        }
-      };
-      
-      // Call the parent
-      return Backbone.Collection.prototype.fetch.call(this, options);
-    }
   });
 });
 

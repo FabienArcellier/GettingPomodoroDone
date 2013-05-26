@@ -30,7 +30,10 @@ $(function(){
    */
   app.PomodoroView = Backbone.View.extend({
     el:'#pomodoro',
-    //Template declaration
+    // Models
+    model: {},
+    
+    // Template declaration
     templatePomodoro: _.template($("#template_pomodoro").html()),
     
     tooltips: {

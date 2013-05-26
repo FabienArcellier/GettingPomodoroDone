@@ -26,22 +26,38 @@ var app = app || {};
 $(function(){
   'use strict';
   
-  /**
-   * Model description
+  /** 
+   * Types declaration
    */
   app.PomodoroType =  {
     Working: 0,
     Break: 1
   };
   
+  app.AppMode = {
+    Pomodoro: 0,
+    Settings: 1
+  }
+  
+  /**
+   * Model description
+   */
   app.AppModel = Backbone.Model.extend({
     defaults: {
+      app_mode: app.AppMode.Pomodoro,
       pomodoro_current_id: 1,
       pomodoro_last_tracking: 0,
       pomodoro_time_ellapsed: 0,
-      pomodoro_time: WORK*60*1000,
+      pomodoro_time: 0,
       pomodoro_type: app.PomodoroType.Working,
       running: false
+    },
+    
+    // Sub models
+    settingsModel: {},
+    
+    initialize: function(attributes, options) {
+      this.setSettings(options.settingsModel);
     },
     
     /**
@@ -56,7 +72,7 @@ $(function(){
     isRunning: function() {
       return this.get('running');
     },
-    /**
+    /**this.set('pomodoro_time') =
      * Return true if the countdown is over, otherwise return false
      */
     isTimeEllapsed: function()
@@ -108,8 +124,12 @@ $(function(){
       var time_ellapsed = this.get('pomodoro_time_ellapsed');
       var time = this.get('pomodoro_time');
       var progress = type == app.PomodoroType.Break ? (time_ellapsed * 100) / time : 100;
-      return progress;
+      return progress;if (this.settingsModel) {
+        var workingTime = this.settingsModel.get('workingTime');
+        this.set('pomodoro_time', workingTime);
+      }
     },
+    
     /**
      * Get the progress of working in percent. The value is defined 
      * between 0 and 100
@@ -130,11 +150,25 @@ $(function(){
      */
     
     /**
+     * Set the attribute settings_model
+     */
+    setSettings: function(settings_model) {
+      this.settingsModel = settings_model;
+      if (this.settingsModel) {
+        var workingTime = this.settingsModel.get('workingTime') * 60 * 1000;
+        this.set('pomodoro_time', workingTime );
+      }
+      
+      return this;
+    },
+    
+    /**
      * Reset the model to the its default state
      */
     reset: function()
     {
       this.save(this.defaults);
+      return this;
     },
     
     /**
@@ -149,38 +183,42 @@ $(function(){
       var current_date = new Date();
       var current_time = current_date.getTime();
       var next_values = {};
+      var settings = this.settingsModel;
+      
       if (type === app.PomodoroType.Working)
       {
-        var break_time = pomodoro_id % POMODORO_BY_LONG_BREAK == 0 ? LONG_BREAK : SHORT_BREAK;
+        var break_time = pomodoro_id % settings.get('iteration') == 0 ? settings.get('longBreakTime') : settings.get('shortBreakTime');
         next_values = {
           pomodoro_last_tracking: current_time,
           pomodoro_time_ellapsed: 0,
           pomodoro_time: break_time * 60 * 1000,
           pomodoro_type: app.PomodoroType.Break
         }
-      }
+      } 
       else {
         pomodoro_id++;
         next_values = {
           pomodoro_current_id: pomodoro_id,
-          pomodoro_internal_id: pomodoro_id % POMODORO_BY_LONG_BREAK,
+          pomodoro_internal_id: pomodoro_id % settings.get('iteration'),
           pomodoro_last_tracking: current_time,
           pomodoro_time_ellapsed: 0,
-          pomodoro_time: WORK * 60 * 1000,
+          pomodoro_time: settings.get('workingTime') * 60 * 1000,
           pomodoro_type: app.PomodoroType.Working
         }
       }
       
       this.save(next_values);
       
-      return;
+      return this;
     },
     /**
      * Set the current pomodoro to zero
      */
     rewind: function() {
       this.save({pomodoro_time_ellapsed:0});
+      return this;
     },
+    
     shiftPreviousStep: function() {
       var type = this.get('pomodoro_type');
       var pomodoro_id = this.get('pomodoro_current_id');
@@ -211,6 +249,7 @@ $(function(){
       }
       
       this.save(next_values);
+      return this;
     }
   });
 });

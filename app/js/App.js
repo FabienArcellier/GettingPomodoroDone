@@ -36,23 +36,38 @@ var app = app || {};
 
 $(function(){
   'use strict';
-  var app_collection = new app.AppCollection();
+  
+  var settings_collection = new app.SettingsCollection();
+  settings_collection.fetch();
+  var model_settings = null;
+  if (settings_collection.length == 0) {
+    model_settings = new app.SettingsModel();
+    settings_collection.push(model_settings);
+  } else {
+    model_settings = settings_collection.at(0);
+  }
   
   // Load the collection and check if a model already exists
   // if not, it creates and register it
+  var app_collection = new app.AppCollection([], {settingsModel: model_settings});
   app_collection.fetch();
-  var app_model = null;
+  
+  var model_app = null;
   if (app_collection.length == 0) {
-    app_model = new app.AppModel();
-    app_collection.push(app_model);
+    model_app = app_collection.createItem();
+    app_collection.push(model_app);
   } else {
-    app_model = app_collection.at(0);
+    model_app = app_collection.at(0);
   }
   
+  // Load the router
+  app.router = new app.AppRouter({modelApp: model_app});
+  Backbone.history.start();
+  
   // Load the view
-  var appView = new app.AppView({ model: app_model });
-  appView.pomodoroView = new app.PomodoroView({model: app_model});
-  appView.settingsView = new app.SettingsView();
+  var appView = new app.AppView({model: model_app});
+  appView.pomodoroView = new app.PomodoroView({model: model_app});
+  appView.settingsView = new app.SettingsView({modelSettings: model_settings, modelApp: model_app});
   appView.render();
   
 });

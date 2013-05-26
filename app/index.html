@@ -28,7 +28,12 @@
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
+
     <div id="app">
+      <a href="https://github.com/FabienArcellier/GettingPomodoroDone">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub">
+      </a>
+    
       <div id="header"></div>
       <div id="pomodoro"></div>
       <div id="settings"></div>
@@ -42,7 +47,7 @@
           <a class="btn" id="header-pomodoro"><i class="icon-arrow-up" ></i></a>
         </div>
         <div class="offset8 span2">
-          <a class="btn" id="header-settings"><i class="icon-wrench" ></i></a>
+          <a class="btn pull-right" id="header-settings" href="#settings"><i class="icon-wrench" ></i></a>
         </div>
       </div>
     </script>
@@ -73,9 +78,9 @@
         </div>
         
         <div class="span4 offset4 btn-toolbar">
-          <div class="btn-group">
+          <div class="btn-group pull-right">
             <a class="btn" title="Previous pomodoro" id="pomodoro-backward"><i class="icon-backward" ></i></a>
-            <a class="btn" title="Rewind pomodoro" id="pomodoro-rewind"><i class="icon-step-backward" ></i></a>
+            <a class="btn" titlesettings_model="Rewind pomodoro" id="pomodoro-rewind"><i class="icon-step-backward" ></i></a>
             <a class="btn" title="Next pomodoro" id="pomodoro-forward"><i class="icon-forward" ></i></a>
           </div>
         </div>
@@ -83,6 +88,46 @@
     </script>
     
     <script type="text/html" id="template_settings">
+      <form class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label" for="settings-inputWorkingTime">Working time</label>
+          <div class="controls">
+            <div class="input-append">
+              <input type="text" id="settings_workingTime" class="numeric" value="<%- workingTime %>">
+              <span class="add-on">min</span>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="settings-inputShortBreakTime">Short break time</label>
+          <div class="controls">
+            <div class="input-append">
+              <input type="text" id="settings_shortBreakTime" class="numeric" value="<%- shortBreakTime %>">
+              <span class="add-on" >min</span>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="settings-inputLongBreakTime">Long break time</label>
+          <div class="controls">
+            <div class="input-append">
+              <input type="text" id="settings_longBreakTime" class="numeric" value="<%- longBreakTime %>">
+              <span class="add-on">min</span>
+            </div>
+          </div>
+        </div>
+        <div class="control-grousettings_modelp">
+          <label class="control-label" for="settings-inputIteration">Iteration</label>
+          <div class="controls">
+              <input type="text" id="settings_iteration" class="numeric" value="<%- iteration %>">
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button id="settings_save" type="submit" class="btn btn-primary">Save changes</button>
+          <button id="settings_cancel" type="button" class="btn">Cancel</button>
+        </div>
+      </form>
     </script>
     
     <script type="text/html" id="template_notificationBreak">
@@ -101,11 +146,14 @@
     <script type="text/javascript" src="vendors/backbone/backbone.js"></script>
     <script type="text/javascript" src="vendors/backbone/backbone.localStorage.js"></script>
     <script type="text/javascript" src="js/Utility.js"></script>
+    <script type="text/javascript" src="js/models/SettingsModel.js"></script>
     <script type="text/javascript" src="js/models/AppModel.js"></script>
+    <script type="text/javascript" src="js/collections/SettingsCollection.js"></script>
     <script type="text/javascript" src="js/collections/AppCollection.js"></script>
     <script type="text/javascript" src="js/views/SettingsView.js"></script>
     <script type="text/javascript" src="js/views/PomodoroView.js"></script>
     <script type="text/javascript" src="js/views/AppView.js"></script>
+    <script type="text/javascript" src="js/routers/AppRouter.js"></script>
     <script type="text/javascript" src="js/App.js"></script>
   </body>
 </html>

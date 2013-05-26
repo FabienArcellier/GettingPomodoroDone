@@ -30,5 +30,11 @@ body { }
 /*
  * Pomodoro
  */
-#pomodoro { margin: auto; width:50% }
+#pomodoro { margin: auto; }
 #pomodoro #pomodoro-timeremaining {text-align:right}
+
+
+/*
+ * Settings
+ */
+#settings .numeric { text-align: right;}
